@@ -77,7 +77,7 @@ corto_int16 _corto_route_init(
 {
 /* $begin(corto/core/route/init) */
     if (!corto_instanceof(corto_routerimpl_o, corto_parentof(this))) {
-        corto_seterr("parent of route should inherit from router");
+        corto_seterr("parent of route should be an instance of core/routerimpl");
         goto error;
     }
 

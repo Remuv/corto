@@ -12,7 +12,9 @@ corto_int16 _corto_router_construct(
     corto_router this)
 {
 /* $begin(corto/core/router/construct) */
-    corto_setref(&corto_interface(this)->base, corto_interface(corto_routerimpl_o));
+    if (!corto_interface(this)->base) {
+        corto_setref(&corto_interface(this)->base, corto_interface(corto_routerimpl_o));
+    }
     corto_setref(&corto_type(this)->defaultProcedureType, corto_method_o);
 
     return corto_class_construct(this);
@@ -46,7 +48,8 @@ corto_int16 _corto_router_match(
         if (corto_instanceof(corto_route_o, o)) {
             corto_stringseq pattern = {.length = elementCount, .buffer = requestElements};
             corto_int32 matched = corto_routerimpl_matchRoute(
-                routerBase, corto_route(o), pattern, param);
+                router, corto_route(o), pattern, param
+            );
             if (matched > maxMatched) {
                 match = corto_route(o);
             }
